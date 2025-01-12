@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import NavIn from "../../components/nav/NavIn";
 import toast from "react-hot-toast";
+import Footer from "../../components/footer/Footer";
 
 const url = import.meta.env.VITE_SERVER_URL;
 
@@ -213,6 +214,8 @@ const ProductPage = () => {
           </div>
         </div>
       )}
+
+      <Footer/>
     </div>
   );
 };

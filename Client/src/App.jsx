@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.css';
 import { Toaster } from 'react-hot-toast';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 import HomeOut from './pages/home/HomeOut';
 import HomeIn from './pages/home/HomeIn';

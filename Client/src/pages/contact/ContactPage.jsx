@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import NavIn from '../../components/nav/NavIn';
+import Footer from '../../components/footer/Footer';
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -27,7 +28,7 @@ const ContactPage = () => {
  </div>
 
    
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4">
+    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4 mb-9">
       <h2 className="text-2xl text-blue-600 font-bold mb-4 mt-10">Contact Us</h2>
       <input
         type="text"
@@ -54,6 +55,9 @@ const ContactPage = () => {
       </button>
       {feedback && <p className="mt-4 text-center">{feedback}</p>}
     </form>
+   
+   <Footer/>
+
 
     </div>
   );

@@ -42,6 +42,10 @@ router.post('/cart',UserController.addToCart)
 router.get('/getcart',UserController.getCart)
 router.delete('/cart/:productId',UserController.deleteToCart)
 router.delete('/cart/:productId/:size',UserController.removeFromCart)
+router.get("/getcoverimage",checkUserAuth,UserController.getCoverImages);
+router.get('/getbestproduct', checkUserAuth,UserController.getBestProducts);
+router.get('/categories', checkUserAuth,UserController.getCategories);
+
 
 
 

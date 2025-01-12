@@ -1,5 +1,6 @@
 import React from 'react';
 import NavIn from '../../components/nav/NavIn';
+import Footer from '../../components/footer/Footer';
 
 function About() {
   return (
@@ -56,7 +57,7 @@ function About() {
           </div>
           <div className="text-center">
             <img
-              src="/path/to/team-member2.jpg"
+              src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.ralphlauren.ca%2Fmen-clothing-dress-shirts&psig=AOvVaw3eD3vfzkeBmPLcuvw5j2s6&ust=1736772256901000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCLCCtoOb8IoDFQAAAAAdAAAAABAE"
               alt="Team Member 2"
               className="w-32 h-32 rounded-full mx-auto mb-4 shadow-lg"
             />
@@ -65,7 +66,7 @@ function About() {
           </div>
           <div className="text-center">
             <img
-              src="/path/to/team-member3.jpg"
+              src=""
               alt="Team Member 3"
               className="w-32 h-32 rounded-full mx-auto mb-4 shadow-lg"
             />
@@ -84,6 +85,10 @@ function About() {
       </section>
     </div>
 
+
+  <div>
+    <Footer/>
+  </div>
 
     </div>
   );

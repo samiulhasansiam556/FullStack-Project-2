@@ -45,7 +45,7 @@ function NavIn() {
   };
 
   return (
-    <div className="bg-blue-700 p-4 shadow-md sticky top-0 left-0">
+    <div className="bg-blue-700 p-4 shadow-md z-50  right-0 top-0 left-0">
       <div className="container mx-auto flex justify-between items-center px-4 md:px-8">
         <div className="text-white text-2xl font-bold">E-Commerce</div>
 

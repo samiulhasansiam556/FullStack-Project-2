@@ -5,9 +5,12 @@ import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 import transporter from "../configs/emailConfig.js";
 import CartModel from '../models/CartModel.js'
-import Category from "../models/CategoryModel.js";
+
 import Product from "../models/ProductModel.js";
 import mongoose from "mongoose";
+import BestProduct from "../models/BestProductModel.js";
+import CoverImage from "../models/CoverImagesModel.js";
+import Category from "../models/CategoryModel.js";
 import fs from 'fs';  
 import path from 'path';  
 
@@ -633,6 +636,34 @@ static deleteToCart = async (req, res) => {
 //     res.status(500).json({ error: 'Server error' });
 //   }
 // };
+//
+
+
+//Fetch all best products
+static getBestProducts = async (req, res) => {
+  try {
+    const bestProducts = await BestProduct.find().populate('productId');
+    res.status(200).json(bestProducts);
+  } catch (error) {
+    res.status(500).json({ error: 'Error fetching best products.' });
+  }
+};
+
+// git cover image
+static getCoverImages = async (req, res) => {
+  try {
+    const images = await CoverImage.find(); // Fetch all images from the database
+    res.status(200).json(images);
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch images", error });
+  }
+};
+
+
+static getCategories = async (req, res) => {
+  const categories = await CategoryModel.find();
+  res.json(categories);
+};
 
 
 }

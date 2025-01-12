@@ -3,6 +3,7 @@ import axios from 'axios';
 import { FaTrash } from 'react-icons/fa';
 import NavIn from '../../components/nav/NavIn';
 import toast from 'react-hot-toast';
+import Footer from '../../components/footer/Footer';
 
 const url = import.meta.env.VITE_SERVER_URL;
 
@@ -100,6 +101,8 @@ const Cart = () => {
         </div>
         
       </div>
+
+      <Footer/>
     </div>
   );
 };
