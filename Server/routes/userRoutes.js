@@ -27,7 +27,7 @@ router.post('/register', UserController.userRegistration);
 router.post('/login', UserController.userLogin)
 router.post('/send-reset-password-email', UserController.sendUserPasswordResetEmail)
 router.post('/reset/:id/:token', UserController.userPasswordReset)
-
+router.post('/create-checkout-session',UserController.paymentGateWay)
 
 
 //Protected Routes

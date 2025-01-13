@@ -5,6 +5,8 @@ import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 import transporter from "../configs/emailConfig.js";
 import CartModel from '../models/CartModel.js'
+import Stripe from "stripe";
+
 
 import Product from "../models/ProductModel.js";
 import mongoose from "mongoose";
@@ -664,6 +666,48 @@ static getCategories = async (req, res) => {
   const categories = await CategoryModel.find();
   res.json(categories);
 };
+
+
+
+
+static paymentGateWay = async (req, res) => {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+  try {
+    const { Product } = req.body; // Expecting an array of products
+
+    if (!Product || !Array.isArray(Product) || Product.length === 0) {
+      return res.status(400).json({ error: "Invalid product data" });
+    }
+
+    // Convert products into Stripe-compatible line items
+    const lineItems = Product.map((product) => ({
+      price_data: {
+        currency: "usd",
+        product_data: { 
+          name: product.name || "Unnamed Product", // Provide a fallback for name
+        },
+        unit_amount: Math.round(product.price * 100), // Stripe expects amounts in cents
+      },
+      quantity: product.quantity || 1, // Default quantity to 1 if not provided
+    }));
+
+    // Create the Stripe checkout session
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: lineItems,
+      mode: "payment",
+      success_url: `${process.env.CLIENT_URL}/success`,
+      cancel_url: `${process.env.CLIENT_URL}/cancel`,
+    });
+
+    res.status(200).json({ id: session.id });
+  } catch (error) {
+    console.error("Stripe Error:", error.message);
+    res.status(500).json({ error: "Unable to create checkout session" });
+  }
+};
+
 
 
 }

@@ -25,6 +25,8 @@ import About from './pages/about/About';
 import ContactPage from './pages/contact/ContactPage';
 import Cart from './pages/cart/Cart';
 import ProductDetails from './pages/product/ProductDetailPage';
+import Success from './components/payment/Success';
+import Cancel from './components/payment/Cancel';
 
 function App() {
   const router = createBrowserRouter([
@@ -129,6 +131,14 @@ function App() {
     {
       path: '/resetpassword/:id/:token',
       element: <ResetPassword />,
+    },
+    {
+      path: '/success',
+      element: <Success/>,
+    },
+    {
+      path: '/cancel',
+      element: <Cancel/>,
     },
     // Catch-all 404 route
     {

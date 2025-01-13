@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import {loadStripe} from '@stripe/stripe-js'
 import { FaTrash } from 'react-icons/fa';
 import NavIn from '../../components/nav/NavIn';
 import toast from 'react-hot-toast';
 import Footer from '../../components/footer/Footer';
+import Product from '../../../../Server/models/ProductModel';
 
 const url = import.meta.env.VITE_SERVER_URL;
+const stripe = import.meta.env.STRIPE_PUBLIC_KEY;
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -13,6 +16,7 @@ const Cart = () => {
 
   useEffect(() => {
     fetchCartItems();
+  
   }, []);
 
   const fetchCartItems = async () => {
@@ -23,6 +27,7 @@ const Cart = () => {
       });
       setCartItems(response.data.items);
       setTotalAmount(response.data.totalAmount);
+    
     } catch (error) {
       console.error('Error fetching cart items:', error);
     }
@@ -40,6 +45,109 @@ const Cart = () => {
       console.error('Error removing item:', error);
     }
   };
+  console.log(cartItems)
+
+  // const makePayment =async ()=>{
+
+  //        const strip = await loadStripe("pk_test_51QgV6gDwFKgnuGaWgdYeUI5CS8H1cHGworYsq6C8i57oF920qmmegWXAl80pX4AvGBInletQhE9AY4aAuP9uayuu00nh0JPzqp")
+
+  //        const body = {
+  //              Products: cartItems
+  //        }
+
+  //        const headers = {
+  //         "Content-Type":"application/json"
+  //        }
+
+  //        const response = await fetch (`${url}/api/user/create-checkout-session`,
+  //         {
+  //           method : "POST",
+  //           headers : headers,
+  //           body : JSON.stringify(body)
+
+  //          })
+
+  //          const session = await response.json();
+
+  //          const makePayment =async ()=>{
+
+  //           const stripe = await loadStripe("pk_test_51QgV6gDwFKgnuGaWgdYeUI5CS8H1cHGworYsq6C8i57oF920qmmegWXAl80pX4AvGBInletQhE9AY4aAuP9uayuu00nh0JPzqp")
+   
+  //           const body = {
+  //                 Products: cartItems
+  //           }
+   
+  //           const headers = {
+  //            "Content-Type":"application/json"
+  //           }
+   
+  //           const response = await fetch (`${url}/api/user/create-checkout-session`,
+  //            {
+  //              method : "POST",
+  //              headers : headers,
+  //              body : JSON.stringify(body)
+   
+  //             })
+   
+  //             const session = await response.json();
+   
+  //            const result = strip.redirectToCheckout({
+  //              sessionId:session.id
+  //            })
+   
+  //            if(result.error){
+  //              console.log(result.error);
+  //            }
+  //    }
+
+  //         if(result.error){
+  //           console.log(result.error);
+  //         }
+  // }
+  const makePayment = async () => {
+    console.log(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+  
+    try {
+      const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+  
+      const body = {
+        Product: cartItems.map((item) => ({
+          name: item.productId.name,
+          price: item.price,
+          quantity: item.quantity,
+        })),
+      };
+  
+      const headers = {
+        "Content-Type": "application/json",
+      };
+  
+      const response = await fetch(`${url}/api/user/create-checkout-session`, {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(body),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const session = await response.json();
+  
+      const result = await stripe.redirectToCheckout({
+        sessionId: session.id,
+      });
+  
+      if (result.error) {
+        console.error("Stripe error:", result.error.message);
+      }
+    } catch (error) {
+      console.error("Error during Stripe payment:", error.message);
+    }
+  };
+  
+  
+
 
   return (
     <div>
@@ -94,7 +202,9 @@ const Cart = () => {
                 Total Amount: ${totalAmount.toFixed(2)}
               </p>
             </div>
-            <button className="mt-6 bg-blue-600 text-white py-2 rounded font-semibold hover:bg-blue-700">
+            <button 
+            onClick={makePayment}
+            className="mt-6 bg-blue-600 text-white py-2 rounded font-semibold hover:bg-blue-700">
               Proceed to Checkout
             </button>
           </div>
