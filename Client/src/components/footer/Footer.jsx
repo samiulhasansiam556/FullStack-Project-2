@@ -47,17 +47,17 @@ export default function Footer() {
         <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
         <ul className="space-y-2 text-sm">
           <li>
-            <a href="/about" className="hover:text-blue-400 transition">
+            <a href="/home/about" className="hover:text-blue-400 transition">
               About Us
             </a>
           </li>
           <li>
-            <a href="/products" className="hover:text-blue-400 transition">
+            <a href="/home/products" className="hover:text-blue-400 transition">
               Products
             </a>
           </li>
           <li>
-            <a href="/contact" className="hover:text-blue-400 transition">
+            <a href="/home/contact" className="hover:text-blue-400 transition">
               Contact Us
             </a>
           </li>
@@ -95,7 +95,7 @@ export default function Footer() {
         © {new Date().getFullYear()} Your Company Name. All rights reserved.
       </p>
       <p className="text-xs mt-2">
-        Made with ❤️ by <a href="#" className="text-blue-400 hover:underline">Your Name</a>.
+        Made with ❤️ by <a href="#" className="text-blue-400 hover:underline">SB</a>.
       </p>
     </div>
   </div>

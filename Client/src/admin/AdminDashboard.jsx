@@ -7,6 +7,7 @@ import ProductCreate from "./ProductCreate";
 import OrderList from "./OrderList";
 import BestProduct from "./BestProduct";
 import AddCoverImages from "./AddCoverImages";
+import AdminOrders from "../pages/Order/AdminOrder";
 
 function AdminDashboard() {
   const [selectedFeature, setSelectedFeature] = useState("CategoryList");
@@ -25,8 +26,8 @@ function AdminDashboard() {
         return <BestProduct/>
       case "AddCoverImages" : 
         return <AddCoverImages/>; 
-      case "OrderList":
-        return <OrderList />;
+        case "Order":
+          return <AdminOrders />;
       default:
         return <CategoryList />;
     }
@@ -78,7 +79,7 @@ function AdminDashboard() {
              Add Cover Images
           </button>
           <button
-            onClick={() => setSelectedFeature("OrderList")}
+            onClick={() => setSelectedFeature("Order")}
             className="text-left w-full"
           >
             Orders

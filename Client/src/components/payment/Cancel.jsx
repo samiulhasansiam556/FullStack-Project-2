@@ -9,7 +9,7 @@ const Cancel = () => {
       <p className="text-lg mb-6">Your payment process was canceled. You can try again at any time.</p>
       <button
         className="bg-red-600 text-white py-2 px-6 rounded hover:bg-red-700"
-        onClick={() => (window.location.href = "/cart")}
+        onClick={() => (window.location.href = "/home/cart")}
       >
         Go Back to Cart
       </button>

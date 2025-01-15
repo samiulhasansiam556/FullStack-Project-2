@@ -8,4 +8,12 @@ export default {
     extend: {},
   },
   plugins: [],
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3800', // Your backend URL
+        changeOrigin: true,
+      },
+    },
+  },
 }

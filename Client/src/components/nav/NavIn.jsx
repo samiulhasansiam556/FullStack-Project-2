@@ -55,6 +55,7 @@ function NavIn() {
         <div className="hidden md:flex items-center space-x-6">
           <Link to="/home" className="text-white">Home</Link>
           <Link to="/home/products" className="text-white">Products</Link>
+          <Link to="/home/order" className="text-white">Order</Link>
           <Link to="/home/contact" className="text-white">Contact</Link>
           <Link to="/home/about" className="text-white">About</Link>
 
@@ -117,6 +118,7 @@ function NavIn() {
             <nav className="flex flex-col space-y-4 mt-10">
               <Link to="/home" onClick={() => setIsMenuOpen(false)} className="text-gray-800">Home</Link>
               <Link to="/home/products" onClick={() => setIsMenuOpen(false)} className="text-gray-800">Products</Link>
+              <Link to="/home/order" >Order</Link>
               <Link to="/home/contact" onClick={() => setIsMenuOpen(false)} className="text-gray-800">Contact</Link>
               <Link to="/home/about" onClick={() => setIsMenuOpen(false)} className="text-gray-800">About</Link>
               <button

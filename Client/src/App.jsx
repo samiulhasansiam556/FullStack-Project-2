@@ -19,7 +19,6 @@ import CategoryList from './admin/CategoryList';
 import CategoryCreate from './admin/CategoryCreate';
 import ProductList from './admin/ProductList';
 import ProductCreate from './admin/ProductCreate';
-import OrderList from './admin/OrderList';
 import ProductPage from './pages/product/ProductPage';
 import About from './pages/about/About';
 import ContactPage from './pages/contact/ContactPage';
@@ -27,6 +26,8 @@ import Cart from './pages/cart/Cart';
 import ProductDetails from './pages/product/ProductDetailPage';
 import Success from './components/payment/Success';
 import Cancel from './components/payment/Cancel';
+import UserOrders from './pages/Order/UserOrder';
+import AdminOrders from './pages/Order/AdminOrder';
 
 function App() {
   const router = createBrowserRouter([
@@ -73,6 +74,10 @@ function App() {
           path: 'productdeails/:id',
           element: <ProductDetails/>
         },
+        {
+          path: 'order',
+          element: <UserOrders/>,
+        },
 
         
            
@@ -104,10 +109,11 @@ function App() {
         path: 'productcreate',
         element: <ProductCreate/> 
       },
-      { 
-        path: 'orderlist',
-        element: <OrderList/> 
+      {
+        path: 'adminorder',
+        element: <AdminOrders/>,
       },
+      
 
      
       
@@ -140,6 +146,8 @@ function App() {
       path: '/cancel',
       element: <Cancel/>,
     },
+   
+   
     // Catch-all 404 route
     {
       path: '*',

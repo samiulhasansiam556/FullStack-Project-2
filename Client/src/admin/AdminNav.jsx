@@ -63,11 +63,11 @@ function AdminNavBar() {
             <div className="flex items-center mb-4">
               <img src={authUser.profileImage} alt="Profile" className="w-20 h-20 rounded-full object-cover mr-4 border-2" />
               <div>
-                <p className="text-lg font-bold">{authUser.name || 'Guest'}</p>
+                <p className="text-l text-black font-bold">{authUser.name || 'Guest'}</p>
                 <p className="text-gray-600">{authUser.email || 'N/A'}</p>
               </div>
             </div>
-            <button onClick={() => navigate('/home/editprofile')} className="bg-gray-200 py-2 px-4 rounded w-full mb-2">
+            <button onClick={() => navigate('/home/editprofile')} className="bg-blue-500 py-2 px-4 rounded w-full mb-2">
               Edit Profile
             </button>
             <button onClick={() => navigate('/home/changepassword')} className="bg-blue-500 text-white py-2 px-4 rounded w-full">

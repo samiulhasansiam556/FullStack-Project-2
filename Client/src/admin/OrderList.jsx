@@ -7,7 +7,7 @@ function OrderList() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get('/api/admin/orders');
+        const response = await axios.get('/api/orders/admin');
         setOrders(Array.isArray(response.data) ? response.data : []); // Ensure orders is an array
       } catch (error) {
         console.error('Failed to fetch orders:', error);
@@ -17,8 +17,9 @@ function OrderList() {
   }, []);
 
   const updateOrderStatus = async (orderId, status) => {
+    console.log(orderId,status)
     try {
-      await axios.put(`/api/admin/orders/${orderId}`, { status });
+      await axios.put(`/api/orders/update-status/${orderId}`, { status });
       setOrders((prevOrders) =>
         prevOrders.map((order) =>
           order._id === orderId ? { ...order, status } : order

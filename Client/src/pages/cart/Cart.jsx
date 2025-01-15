@@ -104,6 +104,48 @@ const Cart = () => {
   //           console.log(result.error);
   //         }
   // }
+  // const makePayment = async () => {
+  //   console.log(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+  
+  //   try {
+  //     const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+  
+  //     const body = {
+  //       Product: cartItems.map((item) => ({
+  //         name: item.productId.name,
+  //         price: item.price,
+  //         quantity: item.quantity,
+  //       })),
+  //     };
+  
+  //     const headers = {
+  //       "Content-Type": "application/json",
+  //     };
+  
+  //     const response = await fetch(`${url}/api/user/create-checkout-session`, {
+  //       method: "POST",
+  //       headers: headers,
+  //       body: JSON.stringify(body),
+  //     });
+  
+  //     if (!response.ok) {
+  //       throw new Error(`HTTP error! status: ${response.status}`);
+  //     }
+  
+  //     const session = await response.json();
+  
+  //     const result = await stripe.redirectToCheckout({
+  //       sessionId: session.id,
+  //     });
+  
+  //     if (result.error) {
+  //       console.error("Stripe error:", result.error.message);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error during Stripe payment:", error.message);
+  //   }
+  // };
+  
   const makePayment = async () => {
     console.log(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
   
@@ -114,14 +156,17 @@ const Cart = () => {
         Product: cartItems.map((item) => ({
           name: item.productId.name,
           price: item.price,
+          totalAmount:item.totalAmount,
           quantity: item.quantity,
         })),
       };
   
       const headers = {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authtoken")}`, 
       };
   
+      // Create checkout session
       const response = await fetch(`${url}/api/user/create-checkout-session`, {
         method: "POST",
         headers: headers,
@@ -134,17 +179,43 @@ const Cart = () => {
   
       const session = await response.json();
   
+      // Redirect to Stripe checkout
       const result = await stripe.redirectToCheckout({
         sessionId: session.id,
       });
-  
+      toast.success(result);
+
       if (result.error) {
         console.error("Stripe error:", result.error.message);
+      } else {
+
+        toast.success('bbbbbbbbb');
+        // After successful payment, create the order
+        const authUser = JSON.parse(localStorage.getItem("authuser")); // Parse the user object from localStorage
+        const userId = authUser._id; // Extract the user ID
+        await fetch(`${url}/api/orders/create`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("authtoken")}`,
+          },
+          body: JSON.stringify({
+            userId,
+            cartItems,
+            totalAmount,
+          }),
+        });
+  
+        // Clear cart after creating the order
+        setCartItems([]);
+        toast.success("Order created successfully!");
       }
     } catch (error) {
       console.error("Error during Stripe payment:", error.message);
+      toast.error("Payment failed. Please try again.");
     }
   };
+  
   
   
 

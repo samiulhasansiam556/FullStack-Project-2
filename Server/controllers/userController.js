@@ -76,6 +76,9 @@ class UserController {
  static userLogin = async (req, res) => {
         try {
           const { email, password } = req.body
+
+          console.log(req.body)
+          
           if (email && password) {
             const user = await UserModel.findOne({ email: email })
             if (user != null) {
@@ -154,6 +157,7 @@ class UserController {
           };
     
           const updatedProfile = await UserModel.findByIdAndUpdate(userId, updatedData, { new: true });
+          console.log(updatedProfile)
           res.json({ user: updatedProfile, message: 'Profile updated successfully' });
         } catch (error) {
           console.error(error);
@@ -690,6 +694,7 @@ static paymentGateWay = async (req, res) => {
         unit_amount: Math.round(product.price * 100), // Stripe expects amounts in cents
       },
       quantity: product.quantity || 1, // Default quantity to 1 if not provided
+      totalAmount: product.totalAmount,
     }));
 
     // Create the Stripe checkout session
@@ -699,16 +704,21 @@ static paymentGateWay = async (req, res) => {
       mode: "payment",
       success_url: `${process.env.CLIENT_URL}/success`,
       cancel_url: `${process.env.CLIENT_URL}/cancel`,
+      metadata: {
+        userId: req.user.id, // Pass the user's ID
+        cartItems: JSON.stringify(Product), // Pass cart items as a JSON string
+        totalAmount: Product.reduce((total, item) => total + item.price * item.quantity, 0), // Calculate total
+      },
     });
+  
 
+    // console.log(session)
     res.status(200).json({ id: session.id });
   } catch (error) {
     console.error("Stripe Error:", error.message);
     res.status(500).json({ error: "Unable to create checkout session" });
   }
 };
-
-
 
 }
 

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import toast from 'react-hot-toast';
 
 const SignIn = () => {
@@ -9,7 +8,7 @@ const SignIn = () => {
     password: ''
   });
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false); // Track loading state
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const url = import.meta.env.VITE_SERVER_URL;
@@ -18,40 +17,48 @@ const SignIn = () => {
     e.preventDefault();
 
     if (!formData.email || !formData.password) {
-        setError('All fields are required');
-        return;
+      setError('All fields are required');
+      return;
     }
 
     try {
-        setLoading(true);
+      setLoading(true);
+      setError(''); // Clear any previous errors
 
-        const response = await axios.post(`${url}/api/user/login`, formData);
+      const result = await fetch(`${url}/api/user/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-        if (response.data.status === 'success') {
-            toast.success(response.data.message, { position: 'top-right' });
-            localStorage.setItem('authtoken', response.data.token);
+      if (!result.ok) {
+        const errorData = await result.json();
+        throw new Error(errorData.message || 'Login failed');
+      }
 
-            if (response.data.role === 'admin') {
-                navigate('/admin/dashboard');
-            } else {
-                navigate('/home');
-            }
+      const response = await result.json();
+
+      if (response.status === 'success') {
+        toast.success(response.message, { position: 'top-right' });
+        localStorage.setItem('authtoken', response.token);
+
+        if (response.role === 'admin') {
+          navigate('/admin/dashboard');
         } else {
-            setError(response.data.message);
+          navigate('/home');
         }
+      } else {
+        setError(response.message || 'An error occurred during login');
+      }
     } catch (err) {
-        console.error('Login error:', err);
-
-        if (err.response && err.response.data) {
-            setError(err.response.data.message || 'An error occurred');
-        } else {
-            setError('An error occurred. Please try again.');
-        }
+      console.error('Login error:', err);
+      setError(err.message || 'An error occurred. Please try again.');
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
-};
-
+  };
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
@@ -65,7 +72,7 @@ const SignIn = () => {
             className="w-full p-2 border border-gray-300 rounded"
             value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            disabled={loading} // Disable input during submission
+            disabled={loading}
           />
         </div>
         <div className="mb-6">
@@ -75,13 +82,13 @@ const SignIn = () => {
             className="w-full p-2 border border-gray-300 rounded"
             value={formData.password}
             onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-            disabled={loading} // Disable input during submission
+            disabled={loading}
           />
         </div>
         <button
           type="submit"
           className={`w-full p-2 rounded text-white ${loading ? 'bg-gray-400' : 'bg-blue-500 hover:bg-blue-600'} mb-4`}
-          disabled={loading} // Disable button during submission
+          disabled={loading}
         >
           {loading ? 'Signing In...' : 'Sign In'}
         </button>
@@ -90,7 +97,7 @@ const SignIn = () => {
             type="button"
             onClick={() => navigate('/signup')}
             className="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600"
-            disabled={loading} // Prevent navigation during loading
+            disabled={loading}
           >
             Don't have an account?
           </button>
@@ -98,7 +105,7 @@ const SignIn = () => {
             type="button"
             onClick={() => navigate('/resetemailsend')}
             className="w-full bg-yellow-500 text-white p-2 rounded hover:bg-yellow-600"
-            disabled={loading} // Prevent navigation during loading
+            disabled={loading}
           >
             Forgot Password
           </button>

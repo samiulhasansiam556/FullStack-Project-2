@@ -11,7 +11,7 @@ router.use('/changepassword', checkUserAuth)
 router.use('/loggeduser', checkUserAuth)
 router.use('/updateuser', checkUserAuth)
 
- router.use('/catagories',checkUserAuth)
+router.use('/catagories',checkUserAuth)
 router.use('/products/:categoryId',checkUserAuth)
 router.use('/cart',checkUserAuth)
 router.use('/getcart',checkUserAuth)
@@ -27,7 +27,7 @@ router.post('/register', UserController.userRegistration);
 router.post('/login', UserController.userLogin)
 router.post('/send-reset-password-email', UserController.sendUserPasswordResetEmail)
 router.post('/reset/:id/:token', UserController.userPasswordReset)
-router.post('/create-checkout-session',UserController.paymentGateWay)
+router.post('/create-checkout-session',checkUserAuth,UserController.paymentGateWay)
 
 
 //Protected Routes

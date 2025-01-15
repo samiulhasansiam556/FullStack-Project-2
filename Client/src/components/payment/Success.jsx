@@ -2,6 +2,9 @@
 import React from "react";
 
 const Success = () => {
+
+   
+
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-green-100 text-green-800">
       <h1 className="text-4xl font-bold mb-4">Payment Successful!</h1>

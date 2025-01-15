@@ -55,12 +55,21 @@ const ProfileEdit = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-  
+        console.log(response.data.user.role)
+        if(response.data.user.role== "user"){
+          navigate('/home')
+        }else{
+          navigate('/admin/dashboard');
+        }
       if (response.status === 200) {
         localStorage.setItem('authuser', JSON.stringify(response.data.user));
         toast.success('Profile updated successfully!',{position:'top-right'});
-        navigate('/home');
+     
+       
       }
+
+
+      
     } catch (error) {
       if (error.response && error.response.data.message) {
         toast.success(error.response.data.message,{position:'top-right'});  // Display backend error message (e.g., 'Username already exists')
