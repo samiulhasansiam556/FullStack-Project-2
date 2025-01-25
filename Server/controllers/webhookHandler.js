@@ -6,7 +6,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 export const stripeWebhookHandler = async (req, res) => {
   // Log the raw body for debugging
 //   console.log("Raw Body:", req.body.toString());
-  // console.log("Webhook Handler Invoked");
+   console.log("Webhook Handler Invoked");
 
   const sig = req.headers["stripe-signature"]; // Retrieve Stripe signature from headers
   const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET; // Your webhook secret
