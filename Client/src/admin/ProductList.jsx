@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import Product from '../../../Server/models/ProductModel';
+
 
 const url = import.meta.env.VITE_SERVER_URL;
 
