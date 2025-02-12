@@ -5,7 +5,7 @@ import { FaTrash } from 'react-icons/fa';
 import NavIn from '../../components/nav/NavIn';
 import toast from 'react-hot-toast';
 import Footer from '../../components/footer/Footer';
-import Product from '../../../../Server/models/ProductModel';
+
 
 const url = import.meta.env.VITE_SERVER_URL;
 const stripe = import.meta.env.STRIPE_PUBLIC_KEY;
