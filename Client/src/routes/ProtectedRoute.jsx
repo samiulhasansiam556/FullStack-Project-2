@@ -1,21 +1,5 @@
 
 
-// import { Navigate,Outlet} from 'react-router-dom';
-
-// const ProtectedRoute = ({ children }) => {
-
-//   const authToken = localStorage.getItem("authtoken");
-
-  
-//   if (authToken) {
-//     return <Outlet />;
-//   } else {
-//     return <Navigate to="/SingIn" />;
-//   }
-// };
-
-// export default ProtectedRoute;
-
 
 import { useState, useEffect } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
@@ -72,3 +56,21 @@ const ProtectedRoute = () => {
 };
 
 export default ProtectedRoute;
+
+
+
+// import { Navigate,Outlet} from 'react-router-dom';
+
+// const ProtectedRoute = ({ children }) => {
+
+//   const authToken = localStorage.getItem("authtoken");
+
+  
+//   if (authToken) {
+//     return <Outlet />;
+//   } else {
+//     return <Navigate to="/SingIn" />;
+//   }
+// };
+
+// export default ProtectedRoute;

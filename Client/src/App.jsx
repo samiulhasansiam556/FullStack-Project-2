@@ -6,7 +6,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import HomeOut from './pages/home/HomeOut';
 import HomeIn from './pages/home/HomeIn';
 import AdminProtectedRoute from './routes/AdminProtectedRoutes';
-import ProtectedRoute from './routes/protectedRoute';
+import ProtectedRoute from './routes/ProtectedRoute';
 import SignUp from './pages/signup/SignUp';
 import SignIn from './pages/signin/SignIn';
 import ChangePassword from './pages/changepassword/ChangePassword';
