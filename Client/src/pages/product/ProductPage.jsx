@@ -97,127 +97,153 @@ const ProductPage = () => {
       }
     }
   };
+return (
+  <div>
+    <NavIn />
 
-  return (
-    <div>
-      <NavIn />
-      <div className="flex bg-gray-100 min-h-screen">
-        <aside className="w-1/4 p-6 bg-white shadow-lg">
-          <h3 className="text-xl font-bold mb-6 text-gray-700">Categories</h3>
-          <ul className="space-y-2">
-            {categories.map((category) => (
-              <li
-                key={category._id}
-                onClick={() => setSelectedCategory(category._id)}
-                className={`cursor-pointer p-2 rounded-md text-gray-600 ${
-                  selectedCategory === category._id
-                    ? "bg-blue-500 text-white"
-                    : "hover:bg-blue-100"
-                }`}
-              >
-                {category.categoryName}
-              </li>
-            ))}
-          </ul>
-        </aside>
-
-        <section className="w-3/4 p-6">
-          <h3 className="text-2xl font-bold mb-4 text-gray-700">Products</h3>
-          {products.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {products.map((product) => (
-                <div
-                  key={product._id}
-                  className="border rounded-lg p-4 bg-white shadow-lg"
-                >
-                  <img
-                    src={product.imageUrl}
-                    alt={product.name}
-                    className="w-full h-48 object-cover mb-4 rounded-md"
-                  />
-                  <h4 className="font-semibold text-lg text-gray-800 mb-2">
-                    {product.name}
-                  </h4>
-                  <p className="text-gray-600 mb-4">${product.price}</p>
-                  <Link
-                    to={`/home/productdeails/${product._id}`}
-                    className="text-blue-500 hover:underline"
-                  >
-                    View Details
-                  </Link>
-                 
-                  <button
-                    onClick={() => openModal(product._id)}
-                    className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md font-semibold mt-2"
-                  >
-                    Add to Cart
-                  </button>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-gray-500">
-              No products available in this category.
-            </p>
-          )}
-        </section>
+    <div className="flex flex-col md:flex-row bg-gray-100 min-h-screen">
+      {/* ✅ Mobile Dropdown */}
+      <div className="md:hidden p-4 bg-white shadow-lg">
+        <label className="block mb-2 text-gray-700 font-semibold">
+          Select Category
+        </label>
+        <select
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+          className="w-full p-2 border rounded-md"
+        >
+          <option value="">All Categories</option>
+          {categories.map((category) => (
+            <option key={category._id} value={category._id}>
+              {category.categoryName}
+            </option>
+          ))}
+        </select>
       </div>
 
-      {/* Modal */}
-      {showModal && productDetails && (
-        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-96 ">
-            <h3 className="text-xl font-bold mb-4">{productDetails.name}</h3>
-            <img
-              src={productDetails.imageUrl}
-              alt={productDetails.name}
-              className="w-full h-48 object-cover mb-4 rounded-md"
-            />
-            <p className="text-gray-600 mb-4">${productDetails.price}</p>
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Select Size</label>
-              <select
-                value={selectedSize}
-                onChange={(e) => setSelectedSize(e.target.value)}
-                className="w-full p-2 border rounded-md"
-              >
-                <option value="">Select size</option>
-                {productDetails.sizes.map((size) => (
-                  <option key={size} value={size}>
-                    {size}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Quantity</label>
-              <input
-                type="number"
-                value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
-                className="w-full p-2 border rounded-md"
-                min="1"
-              />
-            </div>
-            <button
-              onClick={handleAddToCart}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md font-semibold"
+      {/* ✅ Desktop Sidebar */}
+      <aside className="hidden md:block w-full md:w-1/4 p-6 bg-white shadow-lg">
+        <h3 className="text-xl font-bold mb-6 text-gray-700">Categories</h3>
+        <ul className="space-y-2">
+          {categories.map((category) => (
+            <li
+              key={category._id}
+              onClick={() => setSelectedCategory(category._id)}
+              className={`cursor-pointer p-2 rounded-md text-gray-600 ${
+                selectedCategory === category._id
+                  ? "bg-blue-500 text-white"
+                  : "hover:bg-blue-100"
+              }`}
             >
-              Add to Cart
-            </button>
-            <button
-              onClick={() => setShowModal(false)}
-              className="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-md font-semibold mt-2"
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-      )}
+              {category.categoryName}
+            </li>
+          ))}
+        </ul>
+      </aside>
 
-      <Footer/>
+      {/* ✅ Products Section */}
+      <section className="w-full md:w-3/4 p-6">
+        <h3 className="text-2xl font-bold mb-4 text-gray-700">Products</h3>
+        {products.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {products.map((product) => (
+              <div
+                key={product._id}
+                className="border rounded-lg p-4 bg-white shadow-lg flex flex-col"
+              >
+                <img
+                  src={product.imageUrl}
+                  alt={product.name}
+                  className="w-full h-48 object-cover mb-4 rounded-md"
+                />
+                <h4 className="font-semibold text-lg text-gray-800 mb-2">
+                  {product.name}
+                </h4>
+                <p className="text-gray-600 mb-4">${product.price}</p>
+                <Link
+                  to={`/home/productdeails/${product._id}`}
+                  className="text-blue-500 hover:underline mb-2"
+                >
+                  View Details
+                </Link>
+
+                <button
+                  onClick={() => openModal(product._id)}
+                  className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md font-semibold mt-auto"
+                >
+                  Add to Cart
+                </button>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-500">
+            No products available in this category.
+          </p>
+        )}
+      </section>
     </div>
-  );
-};
+
+    {/* ✅ Modal */}
+    {showModal && productDetails && (
+      <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-sm">
+          <h3 className="text-xl font-bold mb-4">{productDetails.name}</h3>
+          <img
+            src={productDetails.imageUrl}
+            alt={productDetails.name}
+            className="w-full h-48 object-cover mb-4 rounded-md"
+          />
+          <p className="text-gray-600 mb-4">${productDetails.price}</p>
+
+          <div className="mb-4">
+            <label className="block text-gray-700 mb-2">Select Size</label>
+            <select
+              value={selectedSize}
+              onChange={(e) => setSelectedSize(e.target.value)}
+              className="w-full p-2 border rounded-md"
+            >
+              <option value="">Select size</option>
+              {productDetails.sizes.map((size) => (
+                <option key={size} value={size}>
+                  {size}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-700 mb-2">Quantity</label>
+            <input
+              type="number"
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+              className="w-full p-2 border rounded-md"
+              min="1"
+            />
+          </div>
+
+          <button
+            onClick={handleAddToCart}
+            className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md font-semibold"
+          >
+            Add to Cart
+          </button>
+
+          <button
+            onClick={() => setShowModal(false)}
+            className="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-md font-semibold mt-2"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    )}
+
+    <Footer />
+  </div>
+);
+
+}
 
 export default ProductPage;

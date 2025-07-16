@@ -142,7 +142,7 @@ function HomeIn() {
         <h2 className="text-2xl text-center pt-20 pb-10 text-blue-700 font-bold mb-4">
           Best Products
         </h2>
-        <div className="grid px-20 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid px-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {bestProducts.map((item) => (
             <div
               key={item._id}
@@ -184,7 +184,7 @@ function HomeIn() {
   <h2 className="mb-14 absolute top-4 text-3xl font-bold text-blue-700 text-center">
     Browse Categories
   </h2>
-  <div className="w-1/2 overflow-hidden relative mt-10">
+  <div className="w-[80%] overflow-hidden relative mt-10">
     {/* Sliding container */}
     <div className="flex space-x-6 animate-scroll">
       {categories.map((category) => (

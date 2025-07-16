@@ -64,61 +64,73 @@ const AdminOrders = () => {
   }, []);
 
   if (loading) return <p>Loading orders...</p>;
+return (
+  <div className="p-4 md:p-6">
+    <h1 className="text-2xl font-bold mb-4">All Orders</h1>
+    {orders.length === 0 ? (
+      <p>No orders found.</p>
+    ) : (
+      <div className="space-y-4">
+        {orders.map((order) => (
+          <div
+            key={order._id}
+            className="p-4 border rounded shadow-md bg-white"
+          >
+            <h2 className="font-bold text-lg break-all">
+              Order ID: {order._id}
+            </h2>
 
-  return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">All Orders</h1>
-      {orders.length === 0 ? (
-        <p>No orders found.</p>
-      ) : (
-        <div className="space-y-4">
-          {orders.map((order) => (
-            <div key={order._id} className="p-4 border rounded shadow-md">
-              <h2 className="font-bold">Order ID: {order._id}</h2>
-              <p>User: {order.user.name} ({order.user.email})</p>
-              <p>Status: {order.status}</p>
-              <p>Total: ${order.totalAmount / 100}</p>
-              <h3 className="font-semibold mt-2">Items:</h3>
-              <ul className="list-disc ml-6">
-                {order.items.map((item, index) => (
-                  <li key={index}>
-                    {item.name} (Quantity-{item.quantity}) - ${item.price / 100} each
-                  </li>
-                ))}
-              </ul>
-              <p className="text-sm text-gray-500">Ordered on: {new Date(order.createdAt).toLocaleString()}</p>
-              <div className="mt-4 flex gap-2">
-                <button
-                  onClick={() => updateOrderStatus(order._id, "Processing")}
-                  className="px-4 py-2 bg-blue-500 text-white rounded"
-                >
-                  Mark as Processing
-                </button>
-                <button
-                  onClick={() => updateOrderStatus(order._id, "Shipped")}
-                  className="px-4 py-2 bg-yellow-500 text-white rounded"
-                >
-                  Mark as Shipped
-                </button>
-                <button
-                  onClick={() => updateOrderStatus(order._id, "Delivered")}
-                  className="px-4 py-2 bg-green-500 text-white rounded"
-                >
-                  Mark as Delivered
-                </button>
-                <button
-                  onClick={() => updateOrderStatus(order._id, "Cancelled")}
-                  className="px-4 py-2 bg-red-500 text-white rounded"
-                >
-                  Cancel Order
-                </button>
-              </div>
+            <p className="mt-1">Status: {order.status}</p>
+            <p>Total: ${order.totalAmount / 100}</p>
+
+            <h3 className="font-semibold mt-3">Items:</h3>
+            <ul className="list-disc ml-6 text-sm">
+              {order.items.map((item, index) => (
+                <li key={index}>
+                  {item.name} (Quantity-{item.quantity}) — $
+                  {item.price / 100} each
+                </li>
+              ))}
+            </ul>
+
+            <p className="text-sm text-gray-500 mt-2">
+              Ordered on:{" "}
+              {new Date(order.createdAt).toLocaleString()}
+            </p>
+
+            <div className="mt-4 flex flex-wrap gap-2">
+              <button
+                onClick={() => updateOrderStatus(order._id, "Processing")}
+                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+              >
+                Mark as Processing
+              </button>
+              <button
+                onClick={() => updateOrderStatus(order._id, "Shipped")}
+                className="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600"
+              >
+                Mark as Shipped
+              </button>
+              <button
+                onClick={() => updateOrderStatus(order._id, "Delivered")}
+                className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+              >
+                Mark as Delivered
+              </button>
+              <button
+                onClick={() => updateOrderStatus(order._id, "Cancelled")}
+                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+              >
+                Cancel Order
+              </button>
             </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+);
+
 };
 
 export default AdminOrders;

@@ -219,73 +219,71 @@ const Cart = () => {
   
   
 
-
-  return (
-    <div>
-      <NavIn />
-      <div className="flex justify-center mt-11 p-2">
-        <div className="flex w-full max-w-4xl gap-6">
-          {/* Left Side: Cart Items */}
-          <div className="flex-1 bg-white shadow-md rounded p-6">
-            <h2 className="text-2xl font-bold mb-4">Your Cart</h2>
-            {cartItems.length === 0 ? (
-              <p className="text-gray-500">Your cart is empty.</p>
-            ) : (
-              <div>
-                {cartItems.map((item) => (
-                  <div
-                    key={`${item.productId._id}-${item.size}`}
-                    className="flex items-center justify-between border-b border-gray-200 py-4"
-                  >
-                    <div className="flex items-center space-x-4">
-                      <img
-                        src={item.productId.imageUrl}
-                        alt={item.productId.name}
-                        className="w-16 h-16 object-cover rounded"
-                      />
-                      <div>
-                        <h3 className="text-lg font-semibold">
-                          {item.productId.name} ({item.size})
-                        </h3>
-                        <p className="text-gray-500">Price: ${item.price.toFixed(2)}</p>
-                        <p className="text-gray-500">Quantity: {item.quantity}</p>
-                        <p className="text-gray-500">Total: ${item.total.toFixed(2)}</p>
-                      </div>
+return (
+  <div>
+    <NavIn />
+    <div className="flex justify-center mt-11 p-2">
+      <div className="flex flex-col md:flex-row w-full max-w-4xl gap-6">
+        {/* Left Side: Cart Items */}
+        <div className="flex-1 bg-white shadow-md rounded p-6 mb-6 md:mb-0">
+          <h2 className="text-2xl font-bold mb-4">Your Cart</h2>
+          {cartItems.length === 0 ? (
+            <p className="text-gray-500">Your cart is empty.</p>
+          ) : (
+            <div className="space-y-4 overflow-x-auto">
+              {cartItems.map((item) => (
+                <div
+                  key={`${item.productId._id}-${item.size}`}
+                  className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-gray-200 py-4"
+                >
+                  <div className="flex items-center space-x-4">
+                    <img
+                      src={item.productId.imageUrl}
+                      alt={item.productId.name}
+                      className="w-16 h-16 object-cover rounded"
+                    />
+                    <div>
+                      <h3 className="text-lg font-semibold">
+                        {item.productId.name} ({item.size})
+                      </h3>
+                      <p className="text-gray-500">Price: ${item.price.toFixed(2)}</p>
+                      <p className="text-gray-500">Quantity: {item.quantity}</p>
+                      <p className="text-gray-500">Total: ${item.total.toFixed(2)}</p>
                     </div>
-                    <button
-                      onClick={() => handleRemoveItem(item.productId._id, item.size)}
-                      className="text-red-500 hover:text-red-700"
-                    >
-                      <FaTrash size={18} />
-                    </button>
                   </div>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Right Side: Summary and Checkout */}
-          <div className="w-1/4 bg-white shadow-md rounded p-6 flex flex-col justify-start">
-            <div>
-              <h3 className="text-xl font-bold">Order Summary</h3>
-              <p className="mt-4 text-lg">Total Items: {cartItems.length}</p>
-              <p className="mt-2 text-lg font-semibold">
-                Total Amount: ${totalAmount.toFixed(2)}
-              </p>
+                  <button
+                    onClick={() => handleRemoveItem(item.productId._id, item.size)}
+                    className="text-red-500 hover:text-red-700 mt-4 sm:mt-0"
+                  >
+                    <FaTrash size={18} />
+                  </button>
+                </div>
+              ))}
             </div>
-            <button 
-            onClick={makePayment}
-            className="mt-6 bg-blue-600 text-white py-2 rounded font-semibold hover:bg-blue-700">
-              Proceed to Checkout
-            </button>
-          </div>
+          )}
         </div>
-        
+
+        {/* Right Side: Summary and Checkout */}
+        <div className="w-full md:w-1/4 bg-white shadow-md rounded p-6 flex flex-col justify-start">
+          <div>
+            <h3 className="text-xl font-bold">Order Summary</h3>
+            <p className="mt-4 text-lg">Total Items: {cartItems.length}</p>
+            <p className="mt-2 text-lg font-semibold">
+              Total Amount: ${totalAmount.toFixed(2)}
+            </p>
+          </div>
+          <button
+            onClick={makePayment}
+            className="mt-6 bg-blue-600 text-white py-2 rounded font-semibold hover:bg-blue-700"
+          >
+            Proceed to Checkout
+          </button>
+        </div>
       </div>
-
-      <Footer/>
     </div>
-  );
-};
 
+    <Footer />
+  </div>
+);
+}
 export default Cart;
