@@ -1,5 +1,6 @@
 import Stripe from "stripe";
 import OrderModel from "../models/OrderModel.js"; // Adjust the path as needed
+import Cart from "../models/CartModel.js"; // Adjust the path as needed
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -32,13 +33,22 @@ export const stripeWebhookHandler = async (req, res) => {
 
       try {
         // Create an order in the database
-        await OrderModel.create({
+        const order = await OrderModel.create({
           user: userId,
           items: JSON.parse(cartItems), // Parse stringified cart items
           totalAmount,
           paymentId: session.payment_intent,
         });
+        if (!order) {
+          throw new Error("Order creation failed");   
+        }
+        
+        await Cart.deleteOne({userId: userId})
+
+
+
         console.log("Order created successfully");
+
       } catch (err) {
         console.error("Failed to create order:", err.message);
       }

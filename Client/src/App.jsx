@@ -53,11 +53,6 @@ function App() {
           path: 'editprofile',
            element: <ProfileEdit />,
         },
-
-        { 
-          path: 'products',
-          element: <ProductPage/> 
-        },
         { 
           path: 'about',
           element: <About/> 
@@ -66,24 +61,26 @@ function App() {
           path: 'contact',
           element: <ContactPage/> 
         },
+
         { 
-          path: 'cart',
-          element: <Cart/> 
+          path: 'products',
+          element: <ProductPage/> 
         },
         { 
           path: 'productdeails/:id',
           element: <ProductDetails/>
         },
+        { 
+          path: 'cart',
+          element: <Cart/> 
+        },
         {
           path: 'order',
           element: <UserOrders/>,
         },
-
-        
-           
-       
       ],
     },
+
  
    {
     path: '/admin/dashboard',
@@ -113,10 +110,6 @@ function App() {
         path: 'adminorder',
         element: <AdminOrders/>,
       },
-      
-
-     
-      
     ],
    },
 
@@ -153,6 +146,7 @@ function App() {
       path: '*',
       element: <NotFound />,
     },
+    
   ]);
 
   return (

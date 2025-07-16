@@ -403,7 +403,7 @@ static getAllCategries = async (req, res) => {
   }
 };
 
-// Fetch products by category
+
  static getProductByCategory = async (req, res) => {
   try {
     const products = await Product.find({ category: req.params.categoryId });
@@ -424,14 +424,12 @@ static getAllCategries = async (req, res) => {
 // }
 
 
-
 static getProductDetails = async (req, res) => {
   try {
     const productId = req.params.id;
 
     // Find product by ID and populate category if needed
     const product = await Product.findById(productId).populate('category');
-  console.log("st")
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
@@ -604,7 +602,8 @@ static getCart = async (req, res) => {
     res.status(500).json({ message: 'Error fetching cart', error });
   }
 };
-// Remove a product from the cart
+
+
 static deleteToCart = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -625,8 +624,6 @@ static deleteToCart = async (req, res) => {
 };
 
 
-
-// static deleteToCart =  async (req, res) => {
 //   try {
 //     const { userId, productId } = req.params;
 //     const cart = await CartModel.findOne({ userId });
@@ -655,7 +652,7 @@ static getBestProducts = async (req, res) => {
   }
 };
 
-// git cover image
+
 static getCoverImages = async (req, res) => {
   try {
     const images = await CoverImage.find(); // Fetch all images from the database
@@ -670,8 +667,6 @@ static getCategories = async (req, res) => {
   const categories = await CategoryModel.find();
   res.json(categories);
 };
-
-
 
 
 static paymentGateWay = async (req, res) => {

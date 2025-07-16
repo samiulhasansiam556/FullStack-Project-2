@@ -189,7 +189,7 @@ const Cart = () => {
         console.error("Stripe error:", result.error.message);
       } else {
 
-        toast.success('bbbbbbbbb');
+        // toast.success('bbbbbbbbb');
         // After successful payment, create the order
         const authUser = JSON.parse(localStorage.getItem("authuser")); // Parse the user object from localStorage
         const userId = authUser._id; // Extract the user ID

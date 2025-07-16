@@ -3,6 +3,7 @@ import Category from '../models/CategoryModel.js'
 import Product from '../models/ProductModel.js'
 import Order from '../models/OrderModel.js'
 import BestProduct from '../models/BestProductModel.js'
+import CoverImage from "../models/CoverImagesModel.js";
 
 //Cloudinary configuration
 cloudinary.config({
@@ -57,7 +58,7 @@ export const deleteCategory = async (req, res) => {
 };
 
 
-// Fetch all products with populated category name
+
 export const getProducts = async (req, res) => {
   try {
     const products = await Product.find().populate('category', 'categoryName'); // Populate only the 'name' field of the category
@@ -78,17 +79,17 @@ export const createProduct = async (req, res) => {
   }
 
   try {
-    console.log(req.file.path)
+    // console.log(req.file.path) 
     // Upload the image to Cloudinary
     const uploadedImage = await cloudinary.uploader.upload(req.file.path);
     const imageUrl = uploadedImage.secure_url;
-  console.log(uploadedImage)
+    // console.log(uploadedImage)
 
     // Create a new product with the provided data
     const product = new Product({ name, price,imageUrl, category,sizes: sizes.split(','), imageUrl });
     const result = await product.save();
 
-    console.log(result)
+    // console.log(result)
     fs.unlink(req.file.path, (err) => {
       if (err) console.error('Failed to delete local image:', err);
       else console.log('Local image deleted after Cloudinary upload.');
@@ -107,7 +108,7 @@ export const deleteProduct = async (req, res) => {
     const imagepath = await Product.findById(productId)
     const deletedProduct = await Product.findByIdAndDelete(productId);
 
-     console.log(imagepath)
+    // console.log(imagepath)
 
     if (!deletedProduct) {
       return res.status(404).json({ message: "Category not found" });
@@ -123,7 +124,7 @@ export const deleteProduct = async (req, res) => {
   }
 };
 
-// Update a product
+
 export const updateProduct = async (req, res) => {
   try {
     const { productId } = req.params;
@@ -148,7 +149,7 @@ export const updateProduct = async (req, res) => {
 
 
 
-//Fetch all best products
+
 export const getBestProducts = async (req, res) => {
   try {
     const bestProducts = await BestProduct.find().populate('productId');
@@ -162,7 +163,7 @@ export const getBestProducts = async (req, res) => {
 
 
 
-// Add multiple best products
+
 export const addBestProducts = async (req, res) => {
   try {
     const { productIds } = req.body; // Array of product IDs
@@ -174,7 +175,7 @@ export const addBestProducts = async (req, res) => {
   }
 };
 
-// Delete a best product
+
 export const deleteBestProduct = async (req, res) => {
   try {
     const { id } = req.params; // Best product ID
@@ -210,11 +211,9 @@ export const getCoverImages = async (req, res) => {
 };
 
 
-// controllers/coverImageController.js
-import CoverImage from "../models/CoverImagesModel.js";
 
 
-// Upload a cover image
+
 export const uploadCoverImage = async (req, res) => {
   try {
     const file = req.file; // Expecting multer to handle file upload
@@ -242,7 +241,8 @@ export const uploadCoverImage = async (req, res) => {
   }
 };
 
-// Delete a cover image
+
+
 export const deleteCoverImage = async (req, res) => {
   try {
     const { id } = req.params;

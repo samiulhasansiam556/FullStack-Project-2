@@ -3,7 +3,7 @@ import Cart from "../models/CartModel.js";
 
 // Create a new order after successful payment
 export const createOrder = async (req, res) => {
-    console.log("create")
+     console.log("create")
   try {
     const { userId, cartItems, totalAmount } = req.body;
 
@@ -36,7 +36,7 @@ export const createOrder = async (req, res) => {
 
 // Fetch orders for a specific user
 export const getUserOrders = async (req, res) => {
-    console.log("get user irders")
+    // console.log("get user irders")
   try {
     const { userId } = req.params;
 
@@ -51,7 +51,7 @@ export const getUserOrders = async (req, res) => {
 
 // Fetch all orders for admin
 export const getAllOrders = async (req, res) => {
-    console.log("get admin orders")
+  //  console.log("get admin orders")
   try {
     const orders = await Order.find().populate("user", "name email").sort({ createdAt: -1 });
 
@@ -64,7 +64,7 @@ export const getAllOrders = async (req, res) => {
 
 // Update order status
 export const updateOrderStatus = async (req, res) => {
-    console.log("update order")
+  //  console.log("update order")
   try {
     const { orderId, status } = req.body;
 

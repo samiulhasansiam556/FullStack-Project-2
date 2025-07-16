@@ -3,10 +3,10 @@ import upload from '../configs/multerConfig.js'
 import checkAdmin from "../middlewares/admin-auth-middlewares.js";
 import checkUserAuth from "../middlewares/user-auth-middlewares.js";
 import { getCategories,createCategory,deleteCategory,getProducts,
-    createProduct,deleteProduct,updateProduct,addBestProducts,getBestProducts
-    ,deleteBestProduct,uploadCoverImage,deleteCoverImage,getCoverImages,
-    getOrders, 
-    updateOrderStatus } from '../controllers/adminController.js';
+     createProduct,deleteProduct,updateProduct,addBestProducts,
+     getBestProducts,deleteBestProduct,uploadCoverImage,deleteCoverImage,
+     getCoverImages,getOrders, 
+     updateOrderStatus } from '../controllers/adminController.js';
 
 const router = express.Router();
 
@@ -35,6 +35,8 @@ router.delete('/products/deletebestproduct/:id',checkAdmin, deleteBestProduct);
 router.post("/products/uploadcoverimage",checkAdmin, upload.single("image"), uploadCoverImage);
 router.delete("/products/deletecoverimage/:id",checkAdmin, deleteCoverImage);
 router.get("/products/getcoverimage",checkAdmin, getCoverImages);
+
+
 // Order Routes
 router.get('/orders', checkAdmin, getOrders);
 router.put('/orders/:id', checkAdmin, updateOrderStatus);
