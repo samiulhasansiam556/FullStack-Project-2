@@ -111,7 +111,7 @@ A full-stack e-commerce web application built with React.js and Node.js, featuri
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone git@github.com:samiulhasansiam556/FullStack-Project-2.git
    cd ecommerce-platform
    ```
 
